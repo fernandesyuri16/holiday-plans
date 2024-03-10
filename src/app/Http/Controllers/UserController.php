@@ -14,9 +14,9 @@ class UserController extends Controller
 
     private UserService $service;
 
-    public function __construct()
+    public function __construct(UserService $service)
     {
-        $this->service = new UserService();
+        $this->service = $service;
     }
 
     public function store(StoreUserRequest $request): JsonResponse
