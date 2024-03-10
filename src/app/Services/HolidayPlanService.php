@@ -3,33 +3,33 @@
 namespace App\Services;
 
 use App\Helpers\Http;
-use App\Repositories\HolidayRepository;
+use App\Repositories\HolidayPlanRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Hash;
 
-class HolidayService
+class HolidayPlanService
 {
     use Http;
 
-    private HolidayRepository $repository;
+    private HolidayPlanRepository $repository;
     private UserRepository $userRepository;
 
 
     public function __construct()
     {
-        $this->repository = new HolidayRepository;
+        $this->repository = new HolidayPlanRepository;
     }
 
-    public function createHoliday(array $holidayDetails): array
+    public function createHolidayPlan(array $holidayDetails): array
     {
         $holidayDetails['password'] = Hash::make($holidayDetails['password']);
 
-        $holiday = $this->repository->createHoliday($holidayDetails);
+        $holiday = $this->repository->createHolidayPlan($holidayDetails);
 
         return $this->created($holiday);
     }
 
-    public function getHoliday(int $holidayId): array
+    public function getHolidayPlan(int $holidayId): array
     {
         $error = $this->checkIfHasError($holidayId);
 
@@ -37,14 +37,14 @@ class HolidayService
             return $error;
         }
 
-        $holiday = $this->repository->getHolidayById($holidayId);
+        $holiday = $this->repository->getHolidayPlan($holidayId);
 
         return $this->ok($holiday);
     }
 
     private function checkIfHasError(int $holidayId, bool $checkPermission = false): array
     {
-        if (! $this->holidayExists($holidayId)) {
+        if (! $this->holidayPlanExists($holidayId)) {
             return $this->notFound("Holiday doesn't exists.");
         }
 
@@ -55,9 +55,9 @@ class HolidayService
         return [];
     }
 
-    private function holidayExists(int $holidayId): bool
+    private function holidayPlanExists(int $holidayId): bool
     {
-        $holiday = $this->repository->getHolidayById($holidayId);
+        $holiday = $this->repository->getHolidayPlan($holidayId);
 
         if (empty($holiday->id)) {
             return false;
@@ -66,7 +66,7 @@ class HolidayService
         return true;
     }
 
-    public function updateHoliday(int $holidayId, array $holidayDetails): array
+    public function updateHolidayPlan(int $holidayId, array $holidayDetails): array
     {
         $error = $this->checkIfHasError($holidayId, true);
 
@@ -74,14 +74,14 @@ class HolidayService
             return $error;
         }
 
-        $this->repository->updateHoliday($holidayId, $holidayDetails);
+        $this->repository->updateHolidayPlan($holidayId, $holidayDetails);
 
-        $user = $this->repository->getHolidayById($holidayId);
+        $user = $this->repository->getHolidayPlan($holidayId);
 
         return $this->ok($user);
     }
 
-    public function deleteHoliday(int $holidayId): array
+    public function deleteHolidayPlan(int $holidayId): array
     {
         $error = $this->checkIfHasError($holidayId, true);
 
@@ -89,7 +89,7 @@ class HolidayService
             return $error;
         }
 
-        $this->repository->deleteHoliday($holidayId);
+        $this->repository->deleteHolidayPlan($holidayId);
 
         return $this->ok('User successfully deleted!');
     }

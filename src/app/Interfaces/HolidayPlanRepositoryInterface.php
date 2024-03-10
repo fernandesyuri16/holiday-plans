@@ -2,10 +2,11 @@
 
 namespace App\Interfaces;
 
-interface HolidayRepositoryInterface
+interface HolidayPlanRepositoryInterface
 {
-    public function createHoliday(array $holidayDetails);
-    public function getHolidayById(int $holidayId);
-    public function updateHoliday(int $holidayId, array $holidayDetails);
-    public function deleteHoliday(int $holidayId);
+    public function createHolidayPlan(array $holidayPlanDetails);
+    public function getHolidayPlan(int $holidayPlanId);
+    public function getHolidayPlans();
+    public function updateHolidayPlan(int $holidayPlanId, array $holidayPlanDetails);
+    public function deleteHolidayPlan(int $holidayPlanId);
 }
