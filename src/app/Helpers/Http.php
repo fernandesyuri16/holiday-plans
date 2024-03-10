@@ -31,9 +31,9 @@ trait Http
         return $this->buildResponse(Response::HTTP_INTERNAL_SERVER_ERROR, 'An internal error has occurred, please contact an administrator.');
     }
 
-    private function forbidden(): array
+    private function forbidden($data): array
     {
-        return $this->buildResponse(Response::HTTP_FORBIDDEN, 'An internal error has occurred, please contact an administrator.');
+        return $this->buildResponse(Response::HTTP_FORBIDDEN, $data);
     }
 
     private function buildResponse(int $code, mixed $data): array
