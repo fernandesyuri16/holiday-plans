@@ -5,7 +5,8 @@ namespace App\Services;
 use App\Helpers\Http;
 use App\Repositories\HolidayPlanRepository;
 use App\Repositories\UserRepository;
-use Illuminate\Support\Facades\Hash;
+use Barryvdh\DomPDF\PDF;
+use Dompdf\Dompdf;
 
 class HolidayPlanService
 {
@@ -20,13 +21,13 @@ class HolidayPlanService
         $this->repository = new HolidayPlanRepository;
     }
 
-    public function createHolidayPlan(array $holidayDetails): array
+    public function createHolidayPlan(array $holidayPlanDetails): array
     {
-        $holidayDetails['password'] = Hash::make($holidayDetails['password']);
+        $holidayPlanDetails['user_id'] = auth()->user()->id;
 
-        $holiday = $this->repository->createHolidayPlan($holidayDetails);
+        $holidayPlan = $this->repository->createHolidayPlan($holidayPlanDetails);
 
-        return $this->created($holiday);
+        return $this->created($holidayPlan);
     }
 
     public function getHolidayPlan(int $holidayId): array
@@ -37,9 +38,16 @@ class HolidayPlanService
             return $error;
         }
 
-        $holiday = $this->repository->getHolidayPlan($holidayId);
+        $holidayPlan = $this->repository->getHolidayPlan($holidayId);
 
-        return $this->ok($holiday);
+        return $this->ok($holidayPlan);
+    }
+
+    public function getHolidayPlans(): array
+    {
+        $holidayPlans = $this->repository->getHolidayPlans();
+
+        return $this->ok($holidayPlans->items());
     }
 
     private function checkIfHasError(int $holidayId, bool $checkPermission = false): array
@@ -66,7 +74,7 @@ class HolidayPlanService
         return true;
     }
 
-    public function updateHolidayPlan(int $holidayId, array $holidayDetails): array
+    public function updateHolidayPlan(int $holidayId, array $holidayPlanDetails): array
     {
         $error = $this->checkIfHasError($holidayId, true);
 
@@ -74,7 +82,7 @@ class HolidayPlanService
             return $error;
         }
 
-        $this->repository->updateHolidayPlan($holidayId, $holidayDetails);
+        $this->repository->updateHolidayPlan($holidayId, $holidayPlanDetails);
 
         $user = $this->repository->getHolidayPlan($holidayId);
 
@@ -92,5 +100,24 @@ class HolidayPlanService
         $this->repository->deleteHolidayPlan($holidayId);
 
         return $this->ok('User successfully deleted!');
+    }
+
+    public function generatePdf(int $holidayId): array
+    {
+        $error = $this->checkIfHasError($holidayId);
+
+        if (! empty($error)) {
+            return $error;
+        }
+
+        $holidayPlan = $this->repository->getHolidayPlan($holidayId);
+
+        $viewData = $holidayPlan->toArray();
+
+        $viewData['userName'] = $holidayPlan->user->name;
+
+        $html = view('holiday-plan-pdf', compact('viewData'))->render();
+
+        return $this->ok($html);
     }
 }

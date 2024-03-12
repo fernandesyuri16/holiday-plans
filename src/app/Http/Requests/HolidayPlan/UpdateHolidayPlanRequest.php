@@ -24,9 +24,9 @@ class UpdateHolidayPlanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|max:50',
+            'title' => 'nullable|max:50',
             'description' => 'nullable|max:150',
-            'date' => 'required|date_format:Y-m-d',
+            'date' => 'nullable|date_format:Y-m-d',
             'location' => 'nullable|max:20',
             'participants' => 'nullable|max:50',
         ];

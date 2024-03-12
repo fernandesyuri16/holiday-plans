@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Http;
-use App\Http\Requests\HolidatPlan\UpdateHolidayPlanRequest;
 use App\Http\Requests\HolidayPlan\StoreHolidayPlanRequest;
+use App\Http\Requests\HolidayPlan\UpdateHolidayPlanRequest;
 use App\Services\HolidayPlanService;
-use App\Services\HolidayService;
 use Illuminate\Http\JsonResponse;
 
 class HolidayPlanController extends Controller
@@ -20,17 +19,17 @@ class HolidayPlanController extends Controller
         $this->service = $service;
     }
 
-    public function index()
+    public function index(): JsonResponse
     {
-        // try {
-        //     $data = $this->service->createHolidayPlan($request->validated());
+        try {
+            $data = $this->service->getHolidayPlans();
 
-        //     return response()->json($data['response'], $data['code']);
-        // } catch (\Throwable $th) {
-        //     $data = $this->serverError();
+            return response()->json($data['response'], $data['code']);
+        } catch (\Throwable $th) {
+            $data = $this->serverError();
 
-        //     return response()->json($data['response'], $data['code']);
-        // }
+            return response()->json($data['response'], $data['code']);
+        }
     }
 
     public function store(StoreHolidayPlanRequest $request): JsonResponse
@@ -80,6 +79,21 @@ class HolidayPlanController extends Controller
             return response()->json($data['response'], $data['code']);
         } catch (\Throwable $th) {
             $data = $this->serverError();
+
+            return response()->json($data['response'], $data['code']);
+        }
+    }
+
+    public function generatePdf(int $holidayPlanId): JsonResponse
+    {
+        try {
+            $data = $this->service->generatePdf($holidayPlanId);
+
+            return response()->json($data['response'], $data['code']);
+        } catch (\Throwable $th) {
+            $data = $this->serverError();
+
+            dd($th->getMessage());
 
             return response()->json($data['response'], $data['code']);
         }

@@ -14,10 +14,10 @@ class StoreHolidayPlanRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:50',
-            'description' => 'nullable|max:150',
+            'title' => 'required|unique:holiday_plans|max:50',
+            'description' => 'required|max:150',
             'date' => 'required|date_format:Y-m-d',
-            'location' => 'nullable|max:20',
+            'location' => 'required|max:20',
             'participants' => 'nullable|max:50',
         ];
     }

@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\HolidayPlanRepositoryInterface;
 use App\Models\HolidayPlan;
+use Illuminate\Pagination\Paginator;
 
 class HolidayPlanRepository implements HolidayPlanRepositoryInterface
 {
@@ -12,14 +13,14 @@ class HolidayPlanRepository implements HolidayPlanRepositoryInterface
         return HolidayPlan::create($holidayPlanDetails);
     }
 
-    public function getHolidayPlans()
-    {
-        return HolidayPlan::all();
-    }
-
     public function getHolidayPlan(int $holidayPlanId): ?HolidayPlan
     {
         return HolidayPlan::find($holidayPlanId);
+    }
+
+    public function getHolidayPlans(): Paginator
+    {
+        return HolidayPlan::simplePaginate(10);
     }
 
     public function updateHolidayPlan(int $holidayPlanId, array $holidayPlanDetails): void

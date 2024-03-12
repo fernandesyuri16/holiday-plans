@@ -39,6 +39,13 @@ class UserService
         return $this->ok($user);
     }
 
+    public function getUsers(): array
+    {
+        $users = $this->repository->getUsers();
+
+        return $this->ok($users->items());
+    }
+
     private function checkIfHasError(int $userId, bool $checkPermission = false): array
     {
         if (! $this->userExists($userId)) {

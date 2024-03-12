@@ -19,6 +19,19 @@ class UserController extends Controller
         $this->service = $service;
     }
 
+    public function index(): JsonResponse
+    {
+        try {
+            $data = $this->service->getUsers();
+
+            return response()->json($data['response'], $data['code']);
+        } catch (\Throwable $th) {
+            $data = $this->serverError();
+
+            return response()->json($data['response'], $data['code']);
+        }
+    }
+
     public function store(StoreUserRequest $request): JsonResponse
     {
         try {

@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\UserRepositoryInterface;
 use App\Models\User;
+use Illuminate\Pagination\Paginator;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -15,6 +16,11 @@ class UserRepository implements UserRepositoryInterface
     public function getUserById(int $userId): ?User
     {
         return User::find($userId);
+    }
+
+    public function getUsers(): Paginator
+    {
+        return User::simplePaginate(10);
     }
 
     public function getUserByEmail(string $userEmail): ?User
