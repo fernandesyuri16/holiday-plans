@@ -7,7 +7,7 @@ networks:
 services:
     nginx:
         image: nginx:alpine
-        container_name: nginx
+        container_name: nginx-hp-api
         restart: unless-stopped
         tty: true
         ports:
@@ -21,10 +21,18 @@ services:
         networks:
             - laravel
 
+
+    adminer:
+        image: adminer
+        container_name: adminer
+        restart: unless-stopped
+        ports:
+            - 8080:8080
+
     mysql:
         platform: linux/amd64
         image: mysql
-        container_name: mysql
+        container_name: mysql-hp-api
         restart: unless-stopped
         tty: true
         ports:
@@ -32,7 +40,7 @@ services:
         volumes:
             - ./mysql:/var/lib/mysql
         environment:
-            MYSQL_DATABASE: laravel_docker
+            MYSQL_DATABASE: hp-api
             MYSQL_USER: user
             MYSQL_PASSWORD: user
             MYSQL_ROOT_PASSWORD: root
@@ -45,7 +53,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        container_name: php
+        container_name: php-hp-api
         restart: unless-stopped
         tty: true
         working_dir: /var/www/app
