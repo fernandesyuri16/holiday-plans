@@ -1,6 +1,6 @@
 # ⛱ Holiday Plans
 
-This project consists of a RESTful API for managing vacation plans:
+This project consists of a RESTful API for managing vacation plans and these are some of features:
 
 1. User registration, login and logout;
 2. Listing, registering, editing and deleting vacation plans;
