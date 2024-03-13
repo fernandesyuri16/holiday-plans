@@ -27,7 +27,7 @@ All set! It will be possible to make requests using the defined routes.
 
 ### 📍 Routes
 
-Create a user
+### Create a user
 
 `POST` http://localhost:8001/api/users
 ```
@@ -38,7 +38,7 @@ Create a user
 }
 ```
 
-Generate token
+### Generate token
 
 `POST` http://localhost:8001/api/token
 ```
@@ -48,11 +48,11 @@ Generate token
 }
 ```
 
-Delete user
+### Delete user
 
 `DELETE` http://localhost:8001/api/users/{id}
 
-Update a user
+### Update a user
 
 `PUT` http://localhost:8001/api/users/{id}
 ```
@@ -60,19 +60,19 @@ Update a user
 	"name": "example2",
 }
 ```
-Retrieve a specific user by their ID
+### Retrieve a specific user by their ID
 
 `GET` http://localhost:8001/api/users/{id}
 
-Retrieve all users
+### Retrieve all users
 
 `GET` http://localhost:8001/api/users/
 
-Log out
+### Log out
 
 `POST` http://localhost:8001/api/logout
 
-Create a vacation plan
+### Create a vacation plan
 
 `POST` http://localhost:8001/api/holiday-plans
 ```
@@ -84,7 +84,7 @@ Create a vacation plan
 	"participants": "2"
 }
 ```
-Update a vacation plan
+### Update a vacation plan
 
 `PUT` http://localhost:8001/api/holiday-plans/{id}
 ```
@@ -92,23 +92,23 @@ Update a vacation plan
 	"title": "Travel to Porto"
 }
 ```
-Delete a vacation plan
+### Delete a vacation plan
 
 `DELETE` http://localhost:8001/api/holiday-plans/{id}
 
-Retrieve a specific vacation plan by its ID
+### Retrieve a specific vacation plan by its ID
 
 `GET` http://localhost:8001/api/holiday-plans/{id}
 
-Retrieve all vacation plans
+### Retrieve all vacation plans
 
 `GET` http://localhost:8001/api/holiday-plans/
 
-Generate PDF of a specific vacation plan
+### Generate PDF of a specific vacation plan
 
 `GET` http://localhost:8001/api/holiday-plans/{id}/pdf
 
-### 🔧 Finalization
+## 🔧 Finalization
 
 To finish the project completely, it is necessary to finish all the containers that have been started.
 
