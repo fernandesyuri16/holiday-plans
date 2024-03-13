@@ -1,4 +1,4 @@
-# Holiday Plans
+# ⛱ Holiday Plans
 
 This project consists of a RESTful API for managing vacation plans:
 
