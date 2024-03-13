@@ -28,6 +28,7 @@ All set! It will be possible to make requests using the defined routes.
 ### 📍 Routes
 
 Create a user
+
 `POST` http://localhost:8001/api/users
 ```
 {
@@ -38,6 +39,7 @@ Create a user
 ```
 
 Generate token
+
 `POST` http://localhost:8001/api/token
 ```
 {
@@ -47,9 +49,11 @@ Generate token
 ```
 
 Delete user
+
 `DELETE` http://localhost:8001/api/users/{id}
 
 Update a user
+
 `PUT` http://localhost:8001/api/users/{id}
 ```
 {
@@ -57,15 +61,19 @@ Update a user
 }
 ```
 Retrieve a specific user by their ID
+
 `GET` http://localhost:8001/api/users/{id}
 
 Retrieve all users
+
 `GET` http://localhost:8001/api/users/
 
 Log out
+
 `POST` http://localhost:8001/api/logout
 
 Create a vacation plan
+
 `POST` http://localhost:8001/api/holiday-plans
 ```
 {
@@ -77,6 +85,7 @@ Create a vacation plan
 }
 ```
 Update a vacation plan
+
 `PUT` http://localhost:8001/api/holiday-plans/{id}
 ```
 {
@@ -84,15 +93,19 @@ Update a vacation plan
 }
 ```
 Delete a vacation plan
+
 `DELETE` http://localhost:8001/api/holiday-plans/{id}
 
 Retrieve a specific vacation plan by its ID
+
 `GET` http://localhost:8001/api/holiday-plans/{id}
 
 Retrieve all vacation plans
+
 `GET` http://localhost:8001/api/holiday-plans/
 
 Generate PDF of a specific vacation plan
+
 `GET` http://localhost:8001/api/holiday-plans/{id}/pdf
 
 ### 🔧 Finalization
