@@ -4,23 +4,25 @@ namespace App\Services;
 
 use App\Helpers\Http;
 use App\Repositories\HolidayPlanRepository;
-use App\Repositories\UserRepository;
-use Barryvdh\DomPDF\PDF;
-use Dompdf\Dompdf;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class HolidayPlanService
 {
     use Http;
 
     private HolidayPlanRepository $repository;
-    private UserRepository $userRepository;
-
 
     public function __construct()
     {
         $this->repository = new HolidayPlanRepository;
     }
 
+    /**
+     * Create a new holiday plan.
+     *
+     * @param array $holidayPlanDetails - Details of the holiday plan.
+     * @return array - Returns an array with the created holiday plan or an error message.
+     */
     public function createHolidayPlan(array $holidayPlanDetails): array
     {
         $holidayPlanDetails['user_id'] = auth()->user()->id;
@@ -30,6 +32,12 @@ class HolidayPlanService
         return $this->created($holidayPlan);
     }
 
+    /**
+     * Get a specific holiday plan.
+     *
+     * @param int $holidayId - The ID of the holiday plan.
+     * @return array - Returns an array with the holiday plan or an error message.
+     */
     public function getHolidayPlan(int $holidayId): array
     {
         $error = $this->checkIfHasError($holidayId);
@@ -43,6 +51,11 @@ class HolidayPlanService
         return $this->ok($holidayPlan);
     }
 
+    /**
+     * Get all holiday plans.
+     *
+     * @return array - Returns an array with all holiday plans.
+     */
     public function getHolidayPlans(): array
     {
         $holidayPlans = $this->repository->getHolidayPlans();
@@ -50,19 +63,34 @@ class HolidayPlanService
         return $this->ok($holidayPlans->items());
     }
 
+    /**
+     * Check if there are any errors.
+     *
+     * @param int $holidayId - The ID of the holiday plan.
+     * @param bool $checkPermission - Whether to check for permissions.
+     * @return array - Returns an array with an error message if there are any errors.
+     */
     private function checkIfHasError(int $holidayId, bool $checkPermission = false): array
     {
+        $holidayPlanDetails = $this->repository->getHolidayPlan($holidayId);
+
         if (! $this->holidayPlanExists($holidayId)) {
             return $this->notFound("Holiday doesn't exists.");
         }
 
-        if ($checkPermission && $holidayId !== auth()->user()->id) {
+        if ($checkPermission && $holidayPlanDetails['user_id'] !== auth()->user()->id) {
             return $this->forbidden("You don't have permission to update or delete this holiday.");
         }
 
         return [];
     }
 
+    /**
+     * Check if a holiday plan exists.
+     *
+     * @param int $holidayId - The ID of the holiday plan.
+     * @return bool - Returns true if the holiday plan exists, false otherwise.
+     */
     private function holidayPlanExists(int $holidayId): bool
     {
         $holiday = $this->repository->getHolidayPlan($holidayId);
@@ -74,6 +102,13 @@ class HolidayPlanService
         return true;
     }
 
+    /**
+     * Update a specific holiday plan.
+     *
+     * @param int $holidayId - The ID of the holiday plan.
+     * @param array $holidayPlanDetails - The new details of the holiday plan.
+     * @return array - Returns an array with the updated holiday plan or an error message.
+     */
     public function updateHolidayPlan(int $holidayId, array $holidayPlanDetails): array
     {
         $error = $this->checkIfHasError($holidayId, true);
@@ -89,6 +124,12 @@ class HolidayPlanService
         return $this->ok($user);
     }
 
+    /**
+     * Delete a specific holiday plan.
+     *
+     * @param int $holidayId - The ID of the holiday plan.
+     * @return array - Returns an array with a success message or an error message.
+     */
     public function deleteHolidayPlan(int $holidayId): array
     {
         $error = $this->checkIfHasError($holidayId, true);
@@ -102,7 +143,13 @@ class HolidayPlanService
         return $this->ok('User successfully deleted!');
     }
 
-    public function generatePdf(int $holidayId): array
+    /**
+     * Generate a PDF for a specific holiday plan.
+     *
+     * @param int $holidayId - The ID of the holiday plan.
+     * @return mixed - Returns the PDF file for download or an error message.
+     */
+    public function generatePdf(int $holidayId): mixed
     {
         $error = $this->checkIfHasError($holidayId);
 
@@ -118,6 +165,8 @@ class HolidayPlanService
 
         $html = view('holiday-plan-pdf', compact('viewData'))->render();
 
-        return $this->ok($html);
+        $pdf = Pdf::loadHTML($html);
+
+        return $pdf->download('holiday-plan-pdf');
     }
 }

@@ -17,6 +17,12 @@ class AuthService
         $this->repository = $repository;
     }
 
+    /**
+     * Generate a new token for a user.
+     *
+     * @param array $userDetails - Details of the user.
+     * @return array - Returns an array with the token or an error message.
+     */
     public function generateToken(array $userDetails): array
     {
         $user = $this->repository->getUserByEmail($userDetails['email']);
@@ -38,6 +44,11 @@ class AuthService
         return $this->ok($token);
     }
 
+    /**
+     * Logout the user.
+     *
+     * @return array - Returns an array with a success message.
+     */
     public function logout(): array
     {
         $user = $this->repository->getUserById(auth()->user()->id);
