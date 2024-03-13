@@ -120,7 +120,7 @@ sudo make stop
 
 Note: if you get an error on the first start, end the application and start it again.
 
-## 🛠️ Built with
+## 🏗️ Built with
 
 * [PHP](https://www.php.net/)
 * [Laravel](https://laravel.com/)
