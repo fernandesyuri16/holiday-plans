@@ -10,6 +10,11 @@ class HolidayPlan extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'user_id',
         'title',
@@ -19,6 +24,11 @@ class HolidayPlan extends Model
         'participants'
     ];
 
+    /**
+     * Get the user that owns the holiday plan.
+     *
+     * @return BelongsTo
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
