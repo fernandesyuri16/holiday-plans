@@ -26,6 +26,7 @@ class UserController extends Controller
      *      tags={"Users"},
      *      summary="",
      *      description="Endpoint to retrieve all users.",
+     *      security={{"sanctum": {}}},
      *      @OA\Response(
      *          response=200,
      *          description="Success, users found.",
@@ -163,6 +164,7 @@ class UserController extends Controller
      *      tags={"Users"},
      *      summary="",
      *      description="Endpoint to consult a user.",
+     *      security={{"sanctum": {}}},
      *      @OA\Parameter(
      *          name="id",
      *          description="User ID",
@@ -235,6 +237,7 @@ class UserController extends Controller
      *      tags={"Users"},
      *      summary="",
      *      description="Endpoint to update a user.",
+     *      security={{"sanctum": {}}},
      *      @OA\Parameter(
      *          name="id",
      *          description="User ID",
@@ -322,6 +325,7 @@ class UserController extends Controller
      *      tags={"Users"},
      *      summary="",
      *      description="Endpoint to delete a user.",
+     *      security={{"sanctum": {}}},
      *      @OA\Parameter(
      *          name="id",
      *          description="User ID",

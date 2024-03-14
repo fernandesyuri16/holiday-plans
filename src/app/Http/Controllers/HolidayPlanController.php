@@ -34,7 +34,7 @@ class HolidayPlanController extends Controller
      *      tags={"HolidayPlan"},
      *      summary="",
      *      description="Endpoint to retrieve all holiday plans.",
-     *      @OA\Response(
+     *      security={{"sanctum": {}}},
      *          response=200,
      *          description="Success, holiday plans found.",
      *          @OA\JsonContent(
@@ -116,6 +116,7 @@ class HolidayPlanController extends Controller
      *      tags={"HolidayPlans"},
      *      summary="",
      *      description="Endpoint to create a holiday plan.",
+     *      security={{"sanctum": {}}},
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(
@@ -180,6 +181,7 @@ class HolidayPlanController extends Controller
      *      tags={"HolidayPlan"},
      *      summary="",
      *      description="Endpoint to consult a holiday plan.",
+     *      security={{"sanctum": {}}},
      *      @OA\Parameter(
      *          name="id",
      *          description="Holiday plan ID",
@@ -253,6 +255,7 @@ class HolidayPlanController extends Controller
      *      tags={"Users"},
      *      summary="",
      *      description="Endpoint to update a holiday plan.",
+     *      security={{"sanctum": {}}},
      *      @OA\Parameter(
      *          name="id",
      *          description="Holiday plan ID",
@@ -343,6 +346,7 @@ class HolidayPlanController extends Controller
      *      tags={"HolidayPlan"},
      *      summary="",
      *      description="Endpoint to delete a Holiday plan.",
+     *      security={{"sanctum": {}}},
      *      @OA\Parameter(
      *          name="id",
      *          description="Holiday plan ID",
@@ -409,6 +413,65 @@ class HolidayPlanController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/holiday-plans/{id}/pdf",
+     *      operationId="generatePdf",
+     *      tags={"HolidayPlan"},
+     *      summary="",
+     *      description="Endpoint to generate a Holiday plan pdf.",
+     *      security={{"sanctum": {}}},
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Holiday plan ID",
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success, pdf generated.",
+     *          @OA\MediaType(
+     *              mediaType="application/pdf",
+     *              @OA\Schema(
+     *                  type="string",
+     *                  format="binary",
+     *                  description="PDF file"
+     *              )
+     *           )
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Not found.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Holiday plan doesn't exists.")
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=403,
+     *          description="Insufficient permission.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="You don't have permission to update or delete this Holiday plan.")
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=401,
+     *          description="Invalid token.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Invalid token.")
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=500,
+     *          description="Internal error.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Internal error, contact an administrator."),
+     *          )
+     *       )
+     * )
+     */
+
+    /**
      * Generates a PDF for a specific holiday plan
      *
      * @param int $holidayPlanId ID of the holiday plan to generate a PDF for
@@ -419,6 +482,7 @@ class HolidayPlanController extends Controller
         try {
             $data = $this->service->generatePdf($holidayPlanId);
 
+            dd($data);
             return $data;
         } catch (\Throwable $th) {
             $data = $this->serverError();
