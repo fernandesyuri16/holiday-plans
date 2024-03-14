@@ -75,11 +75,11 @@ class HolidayPlanService
         $holidayPlanDetails = $this->repository->getHolidayPlan($holidayId);
 
         if (! $this->holidayPlanExists($holidayId)) {
-            return $this->notFound("Holiday doesn't exists.");
+            return $this->notFound("Holiday plan doesn't exists.");
         }
 
         if ($checkPermission && $holidayPlanDetails['user_id'] !== auth()->user()->id) {
-            return $this->forbidden("You don't have permission to update or delete this holiday.");
+            return $this->forbidden("You don't have permission to perform this action.");
         }
 
         return [];
@@ -119,9 +119,9 @@ class HolidayPlanService
 
         $this->repository->updateHolidayPlan($holidayId, $holidayPlanDetails);
 
-        $user = $this->repository->getHolidayPlan($holidayId);
+        $holidayPlan = $this->repository->getHolidayPlan($holidayId);
 
-        return $this->ok($user);
+        return $this->ok($holidayPlan);
     }
 
     /**
@@ -140,7 +140,7 @@ class HolidayPlanService
 
         $this->repository->deleteHolidayPlan($holidayId);
 
-        return $this->ok('User successfully deleted!');
+        return $this->ok('Holiday plan successfully deleted!');
     }
 
     /**
