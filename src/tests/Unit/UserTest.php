@@ -83,7 +83,7 @@ class UserTest extends TestCase
 
     public function test_error_if_user_not_found_when_updating_user(): void
     {
-        $response = $this->userService->updateUser(999, ['name' => 'Lucas Gomide']);
+        $response = $this->userService->updateUser(999, ['name' => 'Yuri Fernandes']);
 
         $this->assertEquals(Response::HTTP_NOT_FOUND, $response['code']);
         $this->assertEquals("User doesn't exists.", $response['response']['data']);
@@ -104,7 +104,7 @@ class UserTest extends TestCase
 
         Sanctum::actingAs($user);
 
-        $response = $this->userService->updateUser($secondUser->id, ['name' => 'Lucas Gomide']);
+        $response = $this->userService->updateUser($secondUser->id, ['name' => 'Yuri Fernandes']);
 
         $this->assertEquals(Response::HTTP_FORBIDDEN, $response['code']);
         $this->assertEquals("You don't have permission to update or delete this user.", $response['response']['data']);
