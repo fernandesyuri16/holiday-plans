@@ -28,6 +28,70 @@ class HolidayPlanController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/holiday-plans/",
+     *      operationId="getHolidayPlans",
+     *      tags={"HolidayPlan"},
+     *      summary="",
+     *      description="Endpoint to retrieve all holiday plans.",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success, holiday plans found.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="data", type="object",
+     *                  @OA\Property(property="id", type="integer", example="1"),
+     *                  @OA\Property(property="user_id", type="integer", example="20"),
+     *                  @OA\Property(property="title", type="string", example="Travel to Lisbon"),
+     *                  @OA\Property(property="descrtiption", type="string", example="Travel from the best city of europe"),
+     *                  @OA\Property(property="date", type="string", format="date-time", example="2024-03-14"),
+     *                  @OA\Property(property="location", type="string", example="Lisbon"),
+     *                  @OA\Property(property="participants", type="integer", example="3"),
+     *
+     *              @OA\Property(property="data", type="object",
+     *                  @OA\Property(property="id", type="integer", example="2"),
+     *                  @OA\Property(property="user_id", type="integer", example="21"),
+     *                  @OA\Property(property="title", type="string", example="Travel to Porto"),
+     *                  @OA\Property(property="descrtiption", type="string", example="Travel from the best city of europe"),
+     *                  @OA\Property(property="date", type="string", format="date-time", example="2024-03-14"),
+     *                  @OA\Property(property="location", type="string", example="Porto"),
+     *                  @OA\Property(property="participants", type="integer", example="3"),
+     *
+     *              @OA\Property(property="data", type="object",
+     *                  @OA\Property(property="id", type="integer", example="3"),
+     *                  @OA\Property(property="user_id", type="integer", example="22"),
+     *                  @OA\Property(property="title", type="string", example="Travel to Braga"),
+     *                  @OA\Property(property="descrtiption", type="string", example="Travel from the best city of europe"),
+     *                  @OA\Property(property="date", type="string", format="date-time", example="2024-03-14"),
+     *                  @OA\Property(property="location", type="string", example="Braga"),
+     *                  @OA\Property(property="participants", type="integer", example="3"),
+     *              )
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Not found.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Holiday plan doesn't exists.")
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=401,
+     *          description="Invalid token.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Invalid token.")
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=500,
+     *          description="Internal error.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Internal error, contact an administrator."),
+     *          )
+     *       )
+     * )
+     */
+
+    /**
      * Fetches all holiday plans
      *
      * @return JsonResponse JSON response containing all holiday plans or an error
@@ -44,6 +108,51 @@ class HolidayPlanController extends Controller
             return response()->json($data['response'], $data['code']);
         }
     }
+
+    /**
+     * @OA\Post(
+     *      path="/holiday-plan",
+     *      operationId="createHolidayPlan",
+     *      tags={"HolidayPlans"},
+     *      summary="",
+     *      description="Endpoint to create a holiday plan.",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(property="title", type="string", example="Travel to Lisbon"),
+     *              @OA\Property(property="descrtiption", type="string", example="Travel from the best city of europe"),
+     *              @OA\Property(property="date", type="string", format="date-time", example="2024-03-14"),
+     *              @OA\Property(property="location", type="string", example="Lisbon"),
+     *              @OA\Property(property="participants", type="integer", example="3"),
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=201,
+     *          description="Success, holiday plan created.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="data", type="object",
+     *                  @OA\Property(property="title", type="string", example="Travel to Lisbon"),
+     *                  @OA\Property(property="descrtiption", type="string", example="Travel from the best city of europe"),
+     *                  @OA\Property(property="date", type="string", format="date-time", example="2024-03-14"),
+     *                  @OA\Property(property="location", type="string", example="Lisbon"),
+     *                  @OA\Property(property="participants", type="integer", example="3"),
+     *                  @OA\Property(property="user_id", type="integer", example="20"),
+     *                  @OA\Property(property="created_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z"),
+     *                  @OA\Property(property="updated_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z"),
+     *                  @OA\Property(property="id", type="integer", example="1"),
+     *              )
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=500,
+     *          description="Internal error.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Internal error, contact an administrator."),
+     *          )
+     *       )
+     * )
+     */
 
     /**
      * Stores a new holiday plan
@@ -65,6 +174,60 @@ class HolidayPlanController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/holiday-plans/{id}",
+     *      operationId="getHolidayPlan",
+     *      tags={"HolidayPlan"},
+     *      summary="",
+     *      description="Endpoint to consult a holiday plan.",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Holiday plan ID",
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success, holiday plan found.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="data", type="object",
+     *                  @OA\Property(property="id", type="integer", example="1"),
+     *                  @OA\Property(property="user_id", type="integer", example="20"),
+     *                  @OA\Property(property="title", type="string", example="Travel to Lisbon"),
+     *                  @OA\Property(property="descrtiption", type="string", example="Travel from the best city of europe"),
+     *                  @OA\Property(property="date", type="string", format="date-time", example="2024-03-14"),
+     *                  @OA\Property(property="location", type="string", example="Lisbon"),
+     *                  @OA\Property(property="participants", type="integer", example="3"),
+     *              )
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Not found.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Holiday plan doesn't exists.")
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=401,
+     *          description="Invalid token.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Invalid token.")
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=500,
+     *          description="Internal error.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Internal error, contact an administrator."),
+     *          )
+     *       )
+     * )
+     */
+
+    /**
      * Fetches a specific holiday plan
      *
      * @param int $holidayPlanId ID of the holiday plan to fetch
@@ -82,6 +245,76 @@ class HolidayPlanController extends Controller
             return response()->json($data['response'], $data['code']);
         }
     }
+
+    /**
+     * @OA\Put(
+     *      path="/holiday-plans/{id}",
+     *      operationId="updateHolidayPlan",
+     *      tags={"Users"},
+     *      summary="",
+     *      description="Endpoint to update a holiday plan.",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Holiday plan ID",
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(property="title", type="string", example="Travel to Porto"),
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success, holiday plan updated.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="data", type="object",
+     *                  @OA\Property(property="id", type="integer", example="1"),
+     *                  @OA\Property(property="user_id", type="integer", example="20"),
+     *                  @OA\Property(property="title", type="string", example="Travel to Lisbon"),
+     *                  @OA\Property(property="descrtiption", type="string", example="Travel from the best city of europe"),
+     *                  @OA\Property(property="date", type="string", format="date-time", example="2024-03-14"),
+     *                  @OA\Property(property="location", type="string", example="Lisbon"),
+     *                  @OA\Property(property="participants", type="integer", example="3"),
+     *                  @OA\Property(property="created_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z"),
+     *                  @OA\Property(property="updated_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z"),
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Not found.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Holiday plan doesn't exists.")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Insufficient permission.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="You don't have permission to update or delete this Holiday plan.")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Invalid token.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Invalid token.")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Internal error.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Internal error, contact an administrator."),
+     *          )
+     *      )
+     * )
+     */
 
     /**
      * Updates a specific holiday plan
@@ -102,6 +335,59 @@ class HolidayPlanController extends Controller
             return response()->json($data['response'], $data['code']);
         }
     }
+
+    /**
+     * @OA\Delete(
+     *      path="/holiday-plans/{id}",
+     *      operationId="deleteHolidayPlan",
+     *      tags={"HolidayPlan"},
+     *      summary="",
+     *      description="Endpoint to delete a Holiday plan.",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Holiday plan ID",
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success, holiday plan deleted.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="data", type="object", example="Holiday plan successfully deleted.")
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Not found.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Holiday plan doesn't exists.")
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=403,
+     *          description="Insufficient permission.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="You don't have permission to update or delete this Holiday plan.")
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=401,
+     *          description="Invalid token.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Invalid token.")
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=500,
+     *          description="Internal error.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Internal error, contact an administrator."),
+     *          )
+     *       )
+     * )
+     */
 
     /**
      * Deletes a specific holiday plan

@@ -20,6 +20,67 @@ class UserController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/users",
+     *      operationId="getUsers",
+     *      tags={"Users"},
+     *      summary="",
+     *      description="Endpoint to retrieve all users.",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success, users found.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="data", type="object",
+     *                  @OA\Property(property="id", type="integer", example=1),
+     *                  @OA\Property(property="name", type="string", example="Yuri Fernandes"),
+     *                  @OA\Property(property="email", type="string", example="yuricaprelliofc1@gmail.com"),
+     *                  @OA\Property(property="email_verified_at", type="string", example="null"),
+     *                  @OA\Property(property="created_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z"),
+     *                  @OA\Property(property="updated_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z"),
+     *
+     *              @OA\Property(property="data", type="object",
+     *                  @OA\Property(property="id", type="integer", example=2),
+     *                  @OA\Property(property="name", type="string", example="Yuri Fernandes12"),
+     *                  @OA\Property(property="email", type="string", example="yuricaprelliofc12@gmail.com"),
+     *                  @OA\Property(property="email_verified_at", type="string", example="null"),
+     *                  @OA\Property(property="created_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z"),
+     *                  @OA\Property(property="updated_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z"),
+     *
+     *              @OA\Property(property="data", type="object",
+     *                  @OA\Property(property="id", type="integer", example=3),
+     *                  @OA\Property(property="name", type="string", example="Yuri Fernandes123"),
+     *                  @OA\Property(property="email", type="string", example="yuricaprelliofc123@gmail.com"),
+     *                  @OA\Property(property="email_verified_at", type="string", example="null"),
+     *                  @OA\Property(property="created_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z"),
+     *                  @OA\Property(property="updated_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z"),
+     *              )
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Not found.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="User doesn't exists.")
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=401,
+     *          description="Invalid token.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Invalid token.")
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=500,
+     *          description="Internal error.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Internal error, contact an administrator."),
+     *          )
+     *       )
+     * )
+     */
+
+    /**
      * Display a listing of the users.
      *
      * @return JsonResponse
@@ -36,6 +97,45 @@ class UserController extends Controller
             return response()->json($data['response'], $data['code']);
         }
     }
+
+    /**
+     * @OA\Post(
+     *      path="/users",
+     *      operationId="createUser",
+     *      tags={"Users"},
+     *      summary="",
+     *      description="Endpoint to create a user.",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(property="name", type="string", example="Yuri Fernandes"),
+     *              @OA\Property(property="email", type="string", example="yuricaparelliofc@gmail.com"),
+     *              @OA\Property(property="password", type="string", example="123456"),
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=201,
+     *          description="Success, user created.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="data", type="object",
+     *                  @OA\Property(property="id", type="integer", example=1),
+     *                  @OA\Property(property="name", type="string", example="Yuri Fernandes"),
+     *                  @OA\Property(property="email", type="string", example="yuricaparelliofc@gmail.com"),
+     *                  @OA\Property(property="created_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z"),
+     *                  @OA\Property(property="updated_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z")
+     *              )
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=500,
+     *          description="Internal error.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Internal error, contact an administrator."),
+     *          )
+     *       )
+     * )
+     */
 
     /**
      * Store a newly created user in storage.
@@ -57,6 +157,59 @@ class UserController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/users/{id}",
+     *      operationId="getUser",
+     *      tags={"Users"},
+     *      summary="",
+     *      description="Endpoint to consult a user.",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="User ID",
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success, user found.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="data", type="object",
+     *                  @OA\Property(property="id", type="integer", example=1),
+     *                  @OA\Property(property="name", type="string", example="Yuri Fernandes"),
+     *                  @OA\Property(property="email", type="string", example="yuricaprelliofc@gmail.com"),
+     *                  @OA\Property(property="email_verified_at", type="string", example="null"),
+     *                  @OA\Property(property="created_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z"),
+     *                  @OA\Property(property="updated_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z")
+     *              )
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Not found.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="User doesn't exists.")
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=401,
+     *          description="Invalid token.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Invalid token.")
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=500,
+     *          description="Internal error.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Internal error, contact an administrator."),
+     *          )
+     *       )
+     * )
+     */
+
+    /**
      * Display the specified user.
      *
      * @param string $userEmail - Email of the user to be displayed.
@@ -74,6 +227,73 @@ class UserController extends Controller
             return response()->json($data['response'], $data['code']);
         }
     }
+
+    /**
+     * @OA\Put(
+     *      path="/users/{id}",
+     *      operationId="updateUser",
+     *      tags={"Users"},
+     *      summary="",
+     *      description="Endpoint to update a user.",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="User ID",
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(property="name", type="string", example="Yuri Fernandes 123"),
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success, user updated.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="data", type="object",
+     *                  @OA\Property(property="id", type="integer", example=1),
+     *                  @OA\Property(property="name", type="string", example="Yuri Fernandes 123"),
+     *                  @OA\Property(property="email", type="string", example="yuricaparelliofc@gmail.com"),
+     *                  @OA\Property(property="email_verified_at", type="string", example="null"),
+     *                  @OA\Property(property="created_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z"),
+     *                  @OA\Property(property="updated_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z")
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Not found.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="User doesn't exists.")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Insufficient permission.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="You don't have permission to update or delete this user.")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Invalid token.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Invalid token.")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Internal error.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Internal error, contact an administrator."),
+     *          )
+     *      )
+     * )
+     */
 
     /**
      * Update the specified user in storage.
@@ -94,6 +314,59 @@ class UserController extends Controller
             return response()->json($data['response'], $data['code']);
         }
     }
+
+    /**
+     * @OA\Delete(
+     *      path="/users/{id}",
+     *      operationId="deleteUser",
+     *      tags={"Users"},
+     *      summary="",
+     *      description="Endpoint to delete a user.",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="User ID",
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success, user deleted.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="data", type="object", example="User successfully deleted.")
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Not found.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="User doesn't exists.")
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=403,
+     *          description="Insufficient permission.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="You don't have permission to update or delete this user.")
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=401,
+     *          description="Invalid token.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Invalid token.")
+     *          )
+     *       ),
+     *       @OA\Response(
+     *          response=500,
+     *          description="Internal error.",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Internal error, contact an administrator."),
+     *          )
+     *       )
+     * )
+     */
 
     /**
      * Remove the specified user from storage.

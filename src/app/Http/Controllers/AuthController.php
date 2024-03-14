@@ -29,6 +29,52 @@ class AuthController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *      path="/token",
+     *      operationId="generateToken",
+     *      tags={"Authentication"},
+     *      summary="",
+     *      description="Endpoint to generate the token used for authenticating requests. It is necessary to first create a user and then generate the token with their respective data.",
+     *		@OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     * 				type="object",
+     * 				@OA\Property(property="email", type="string", example="lucasgomidecv@gmail.com"),
+     * 				@OA\Property(property="password", type="string", example="abc142536%")
+     * 			)
+     *      ),
+     *      @OA\Response(
+     *          response=201,
+     *          description="Success, token generated.",
+     *          @OA\JsonContent(
+     * 				@OA\Property(property="data", type="string", example="{{token}}")
+     * 			)
+     *       ),
+     *       @OA\Response(
+     *          response=404,
+     *          description="Not found.",
+     * 			@OA\JsonContent(
+     * 				@OA\Property(property="error", type="string", example="User doesn't exists.")
+     * 			)
+     *       ),
+     *       @OA\Response(
+     *          response=422,
+     *          description="Invalid password.",
+     * 			@OA\JsonContent(
+     * 				@OA\Property(property="error", type="string", example="Invalid password.")
+     * 			)
+     *       ),
+     * 		 @OA\Response(
+     *     	    response=500,
+     *     		description="Internal error.",
+     *     	 	@OA\JsonContent(
+     *         		@OA\Property(property="error", type="string", example="Internal error, contact an administrator."),
+     *     	 	)
+     * 		 )
+     * )
+     */
+
+    /**
      * Generates an authentication token
      *
      * @param LoginRequest $request Validated login request
@@ -46,6 +92,38 @@ class AuthController extends Controller
             return response()->json($data['response'], $data['code']);
         }
     }
+
+    /**
+     * @OA\Post(
+     *      path="/logout",
+     *      operationId="disconnectUser",
+     *      tags={"Authentication"},
+     *      summary="",
+     *      description="Endpoint to disconnect the user.",
+     *      security={{"sanctum": {}}},
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success, user disconnected.",
+     *          @OA\JsonContent(
+     * 				@OA\Property(property="data", type="string", example="Successfully disconnected.")
+     * 			)
+     *       ),
+     *       @OA\Response(
+     *          response=401,
+     *          description="Invalid token.",
+     * 			@OA\JsonContent(
+     * 				@OA\Property(property="error", type="string", example="Invalid token.")
+     * 			)
+     *       ),
+     * 		 @OA\Response(
+     *     	    response=500,
+     *     		description="Internal error.",
+     *     	 	@OA\JsonContent(
+     *         		@OA\Property(property="error", type="string", example="Internal error, contact an administrator."),
+     *     	 	)
+     * 		 )
+     * )
+     */
 
     /**
      * Logs out the user
