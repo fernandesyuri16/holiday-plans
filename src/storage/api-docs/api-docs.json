@@ -31,11 +31,11 @@
                                 "properties": {
                                     "email": {
                                         "type": "string",
-                                        "example": "lucasgomidecv@gmail.com"
+                                        "example": "yuricaparelliofc@gmail.com"
                                     },
                                     "password": {
                                         "type": "string",
-                                        "example": "abc142536%"
+                                        "example": "142536%"
                                     }
                                 },
                                 "type": "object"
