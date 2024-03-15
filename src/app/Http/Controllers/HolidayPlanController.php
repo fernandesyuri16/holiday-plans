@@ -424,7 +424,6 @@ class HolidayPlanController extends Controller
         try {
             $data = $this->service->generatePdf($holidayPlanId);
 
-            dd($data);
             return $data;
         } catch (\Throwable $th) {
             $data = $this->serverError();
