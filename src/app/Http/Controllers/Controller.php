@@ -8,8 +8,8 @@ use Illuminate\Routing\Controller as BaseController;
 
 /**
  * @OA\Info(
- *      version="0.0.1",
  *      title="Holiday Plans - Docs",
+ *      version="1.0.0",
  *      description="API documentation for the <b>Holiday Plans</b> project",
  *      @OA\Contact(
  *          email="yuricaparelliofc@gmail.com"
@@ -18,7 +18,7 @@ use Illuminate\Routing\Controller as BaseController;
  *
  * @OA\Server(
  *      url="http://localhost:8001/api",
- *      description="API url"
+ *      description="API Url"
  * )
  *
  * @OA\SecurityScheme(
@@ -29,14 +29,6 @@ use Illuminate\Routing\Controller as BaseController;
  * 		scheme="sanctum",
  * 		securityScheme="sanctum"
  * )
- *
- */
-
-/**
- * Class Controller
- *
- * This is the base controller class that all other controllers extend from.
- * It includes traits for authorizing requests and validating requests.
  */
 class Controller extends BaseController
 {

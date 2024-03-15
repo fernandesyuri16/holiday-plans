@@ -33,7 +33,7 @@ class AuthController extends Controller
      *      path="/token",
      *      operationId="generateToken",
      *      tags={"Authentication"},
-     *      summary="",
+     *      summary="Generate the token for authentication.",
      *      description="Endpoint to generate the token used for authenticating requests. It is necessary to first create a user and then generate the token with their respective data.",
      *		@OA\RequestBody(
      *          required=true,
@@ -73,13 +73,6 @@ class AuthController extends Controller
      * 		 )
      * )
      */
-
-    /**
-     * Generates an authentication token
-     *
-     * @param LoginRequest $request Validated login request
-     * @return JsonResponse JSON response containing the authentication token or an error
-     */
     public function generateToken(LoginRequest $request): JsonResponse
     {
         try {
@@ -98,7 +91,7 @@ class AuthController extends Controller
      *      path="/logout",
      *      operationId="disconnectUser",
      *      tags={"Authentication"},
-     *      summary="",
+     *      summary="Log out the authenticated user.",
      *      description="Endpoint to disconnect the user.",
      *      security={{"sanctum": {}}},
      *      @OA\Response(
@@ -123,12 +116,6 @@ class AuthController extends Controller
      *     	 	)
      * 		 )
      * )
-     */
-
-    /**
-     * Logs out the user
-     *
-     * @return JsonResponse JSON response indicating the result of the logout operation
      */
     public function logout(): JsonResponse
     {

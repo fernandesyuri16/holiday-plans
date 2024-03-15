@@ -31,10 +31,11 @@ class HolidayPlanController extends Controller
      * @OA\Get(
      *      path="/holiday-plans/",
      *      operationId="getHolidayPlans",
-     *      tags={"HolidayPlan"},
-     *      summary="",
+     *      tags={"HolidayPlans"},
+     *      summary="Get all registered holiday plans",
      *      description="Endpoint to retrieve all holiday plans.",
      *      security={{"sanctum": {}}},
+     *      @OA\Response(
      *          response=200,
      *          description="Success, holiday plans found.",
      *          @OA\JsonContent(
@@ -42,60 +43,37 @@ class HolidayPlanController extends Controller
      *                  @OA\Property(property="id", type="integer", example="1"),
      *                  @OA\Property(property="user_id", type="integer", example="20"),
      *                  @OA\Property(property="title", type="string", example="Travel to Lisbon"),
-     *                  @OA\Property(property="descrtiption", type="string", example="Travel from the best city of europe"),
+     *                  @OA\Property(property="description", type="string", example="Travel from the best city of europe"),
      *                  @OA\Property(property="date", type="string", format="date-time", example="2024-03-14"),
      *                  @OA\Property(property="location", type="string", example="Lisbon"),
-     *                  @OA\Property(property="participants", type="integer", example="3"),
-     *
-     *              @OA\Property(property="data", type="object",
-     *                  @OA\Property(property="id", type="integer", example="2"),
-     *                  @OA\Property(property="user_id", type="integer", example="21"),
-     *                  @OA\Property(property="title", type="string", example="Travel to Porto"),
-     *                  @OA\Property(property="descrtiption", type="string", example="Travel from the best city of europe"),
-     *                  @OA\Property(property="date", type="string", format="date-time", example="2024-03-14"),
-     *                  @OA\Property(property="location", type="string", example="Porto"),
-     *                  @OA\Property(property="participants", type="integer", example="3"),
-     *
-     *              @OA\Property(property="data", type="object",
-     *                  @OA\Property(property="id", type="integer", example="3"),
-     *                  @OA\Property(property="user_id", type="integer", example="22"),
-     *                  @OA\Property(property="title", type="string", example="Travel to Braga"),
-     *                  @OA\Property(property="descrtiption", type="string", example="Travel from the best city of europe"),
-     *                  @OA\Property(property="date", type="string", format="date-time", example="2024-03-14"),
-     *                  @OA\Property(property="location", type="string", example="Braga"),
-     *                  @OA\Property(property="participants", type="integer", example="3"),
+     *                  @OA\Property(property="participants", type="integer", example="3")
      *              )
      *          )
-     *       ),
-     *       @OA\Response(
+     *      ),
+     *      @OA\Response(
      *          response=404,
      *          description="Not found.",
      *          @OA\JsonContent(
      *              @OA\Property(property="error", type="string", example="Holiday plan doesn't exists.")
      *          )
-     *       ),
-     *       @OA\Response(
+     *      ),
+     *      @OA\Response(
      *          response=401,
      *          description="Invalid token.",
      *          @OA\JsonContent(
      *              @OA\Property(property="error", type="string", example="Invalid token.")
      *          )
-     *       ),
-     *       @OA\Response(
+     *      ),
+     *      @OA\Response(
      *          response=500,
      *          description="Internal error.",
      *          @OA\JsonContent(
-     *              @OA\Property(property="error", type="string", example="Internal error, contact an administrator."),
+     *              @OA\Property(property="error", type="string", example="Internal error, contact an administrator.")
      *          )
-     *       )
+     *      )
      * )
      */
 
-    /**
-     * Fetches all holiday plans
-     *
-     * @return JsonResponse JSON response containing all holiday plans or an error
-     */
     public function index(): JsonResponse
     {
         try {
@@ -114,7 +92,7 @@ class HolidayPlanController extends Controller
      *      path="/holiday-plan",
      *      operationId="createHolidayPlan",
      *      tags={"HolidayPlans"},
-     *      summary="",
+     *      summary="Create a holiday plan",
      *      description="Endpoint to create a holiday plan.",
      *      security={{"sanctum": {}}},
      *      @OA\RequestBody(
@@ -154,13 +132,6 @@ class HolidayPlanController extends Controller
      *       )
      * )
      */
-
-    /**
-     * Stores a new holiday plan
-     *
-     * @param StoreHolidayPlanRequest $request Validated store holiday plan request
-     * @return JsonResponse JSON response indicating the result of the store operation
-     */
     public function store(StoreHolidayPlanRequest $request): JsonResponse
     {
         try {
@@ -178,8 +149,8 @@ class HolidayPlanController extends Controller
      * @OA\Get(
      *      path="/holiday-plans/{id}",
      *      operationId="getHolidayPlan",
-     *      tags={"HolidayPlan"},
-     *      summary="",
+     *      tags={"HolidayPlans"},
+     *      summary="Get the holiday plan registered by id",
      *      description="Endpoint to consult a holiday plan.",
      *      security={{"sanctum": {}}},
      *      @OA\Parameter(
@@ -228,13 +199,6 @@ class HolidayPlanController extends Controller
      *       )
      * )
      */
-
-    /**
-     * Fetches a specific holiday plan
-     *
-     * @param int $holidayPlanId ID of the holiday plan to fetch
-     * @return JsonResponse JSON response containing the holiday plan or an error
-     */
     public function show(int $holidayPlanId): JsonResponse
     {
         try {
@@ -252,8 +216,8 @@ class HolidayPlanController extends Controller
      * @OA\Put(
      *      path="/holiday-plans/{id}",
      *      operationId="updateHolidayPlan",
-     *      tags={"Users"},
-     *      summary="",
+     *      tags={"HolidayPlans"},
+     *      summary="Update a holiday plan by id",
      *      description="Endpoint to update a holiday plan.",
      *      security={{"sanctum": {}}},
      *      @OA\Parameter(
@@ -318,14 +282,6 @@ class HolidayPlanController extends Controller
      *      )
      * )
      */
-
-    /**
-     * Updates a specific holiday plan
-     *
-     * @param int $holidayPlanId ID of the holiday plan to update
-     * @param UpdateHolidayPlanRequest $request Validated update holiday plan request
-     * @return JsonResponse JSON response indicating the result of the update operation
-     */
     public function update(int $holidayPlanId, UpdateHolidayPlanRequest $request): JsonResponse
     {
         try {
@@ -343,8 +299,8 @@ class HolidayPlanController extends Controller
      * @OA\Delete(
      *      path="/holiday-plans/{id}",
      *      operationId="deleteHolidayPlan",
-     *      tags={"HolidayPlan"},
-     *      summary="",
+     *      tags={"HolidayPlans"},
+     *      summary="Deleting a holiday plan by id",
      *      description="Endpoint to delete a Holiday plan.",
      *      security={{"sanctum": {}}},
      *      @OA\Parameter(
@@ -392,13 +348,6 @@ class HolidayPlanController extends Controller
      *       )
      * )
      */
-
-    /**
-     * Deletes a specific holiday plan
-     *
-     * @param int $holidayPlanId ID of the holiday plan to delete
-     * @return JsonResponse JSON response indicating the result of the delete operation
-     */
     public function destroy(int $holidayPlanId): JsonResponse
     {
         try {
@@ -416,8 +365,8 @@ class HolidayPlanController extends Controller
      * @OA\Get(
      *      path="/holiday-plans/{id}/pdf",
      *      operationId="generatePdf",
-     *      tags={"HolidayPlan"},
-     *      summary="",
+     *      tags={"HolidayPlans"},
+     *      summary="Generate Pdf of a holiday plan by id",
      *      description="Endpoint to generate a Holiday plan pdf.",
      *      security={{"sanctum": {}}},
      *      @OA\Parameter(
@@ -469,13 +418,6 @@ class HolidayPlanController extends Controller
      *          )
      *       )
      * )
-     */
-
-    /**
-     * Generates a PDF for a specific holiday plan
-     *
-     * @param int $holidayPlanId ID of the holiday plan to generate a PDF for
-     * @return mixed The generated PDF or an error
      */
     public function generatePdf(int $holidayPlanId): mixed
     {

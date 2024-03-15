@@ -24,36 +24,22 @@ class UserController extends Controller
      *      path="/users",
      *      operationId="getUsers",
      *      tags={"Users"},
-     *      summary="",
+     *      summary="Get registered users",
      *      description="Endpoint to retrieve all users.",
      *      security={{"sanctum": {}}},
      *      @OA\Response(
      *          response=200,
      *          description="Success, users found.",
      *          @OA\JsonContent(
-     *              @OA\Property(property="data", type="object",
-     *                  @OA\Property(property="id", type="integer", example=1),
-     *                  @OA\Property(property="name", type="string", example="Yuri Fernandes"),
-     *                  @OA\Property(property="email", type="string", example="yuricaprelliofc1@gmail.com"),
-     *                  @OA\Property(property="email_verified_at", type="string", example="null"),
-     *                  @OA\Property(property="created_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z"),
-     *                  @OA\Property(property="updated_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z"),
-     *
-     *              @OA\Property(property="data", type="object",
-     *                  @OA\Property(property="id", type="integer", example=2),
-     *                  @OA\Property(property="name", type="string", example="Yuri Fernandes12"),
-     *                  @OA\Property(property="email", type="string", example="yuricaprelliofc12@gmail.com"),
-     *                  @OA\Property(property="email_verified_at", type="string", example="null"),
-     *                  @OA\Property(property="created_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z"),
-     *                  @OA\Property(property="updated_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z"),
-     *
-     *              @OA\Property(property="data", type="object",
-     *                  @OA\Property(property="id", type="integer", example=3),
-     *                  @OA\Property(property="name", type="string", example="Yuri Fernandes123"),
-     *                  @OA\Property(property="email", type="string", example="yuricaprelliofc123@gmail.com"),
-     *                  @OA\Property(property="email_verified_at", type="string", example="null"),
-     *                  @OA\Property(property="created_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z"),
-     *                  @OA\Property(property="updated_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z"),
+     *              @OA\Property(property="data", type="array",
+     *                  @OA\Items(type="object",
+     *                      @OA\Property(property="id", type="integer", example=1),
+     *                      @OA\Property(property="name", type="string", example="Yuri Fernandes"),
+     *                      @OA\Property(property="email", type="string", example="yuricaprelliofc1@gmail.com"),
+     *                      @OA\Property(property="email_verified_at", type="string", example="null"),
+     *                      @OA\Property(property="created_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z"),
+     *                      @OA\Property(property="updated_at", type="string", format="date-time", example="2024-03-14T01:57:56.000000Z")
+     *                  )
      *              )
      *          )
      *       ),
@@ -81,11 +67,6 @@ class UserController extends Controller
      * )
      */
 
-    /**
-     * Display a listing of the users.
-     *
-     * @return JsonResponse
-     */
     public function index(): JsonResponse
     {
         try {
@@ -104,7 +85,7 @@ class UserController extends Controller
      *      path="/users",
      *      operationId="createUser",
      *      tags={"Users"},
-     *      summary="",
+     *      summary="Create a user",
      *      description="Endpoint to create a user.",
      *      @OA\RequestBody(
      *          required=true,
@@ -137,13 +118,6 @@ class UserController extends Controller
      *       )
      * )
      */
-
-    /**
-     * Store a newly created user in storage.
-     *
-     * @param StoreUserRequest $request - Request with validated user data.
-     * @return JsonResponse
-     */
     public function store(StoreUserRequest $request): JsonResponse
     {
         try {
@@ -162,7 +136,7 @@ class UserController extends Controller
      *      path="/users/{id}",
      *      operationId="getUser",
      *      tags={"Users"},
-     *      summary="",
+     *      summary="Get user by id",
      *      description="Endpoint to consult a user.",
      *      security={{"sanctum": {}}},
      *      @OA\Parameter(
@@ -210,13 +184,6 @@ class UserController extends Controller
      *       )
      * )
      */
-
-    /**
-     * Display the specified user.
-     *
-     * @param string $userEmail - Email of the user to be displayed.
-     * @return JsonResponse
-     */
     public function show(string $userEmail): JsonResponse
     {
         try {
@@ -235,7 +202,7 @@ class UserController extends Controller
      *      path="/users/{id}",
      *      operationId="updateUser",
      *      tags={"Users"},
-     *      summary="",
+     *      summary="Update user by id",
      *      description="Endpoint to update a user.",
      *      security={{"sanctum": {}}},
      *      @OA\Parameter(
@@ -297,14 +264,6 @@ class UserController extends Controller
      *      )
      * )
      */
-
-    /**
-     * Update the specified user in storage.
-     *
-     * @param string $userId - ID of the user to be updated.
-     * @param UpdateUserRequest $request - Request with validated user data.
-     * @return JsonResponse
-     */
     public function update(string $userId, UpdateUserRequest $request): JsonResponse
     {
         try {
@@ -323,7 +282,7 @@ class UserController extends Controller
      *      path="/users/{id}",
      *      operationId="deleteUser",
      *      tags={"Users"},
-     *      summary="",
+     *      summary="Delete user by id",
      *      description="Endpoint to delete a user.",
      *      security={{"sanctum": {}}},
      *      @OA\Parameter(
@@ -370,13 +329,6 @@ class UserController extends Controller
      *          )
      *       )
      * )
-     */
-
-    /**
-     * Remove the specified user from storage.
-     *
-     * @param string $userId - ID of the user to be deleted.
-     * @return JsonResponse
      */
     public function destroy(string $userId): JsonResponse
     {
