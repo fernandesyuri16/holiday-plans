@@ -31,7 +31,7 @@ All set! Requests can now be made using the routes defined as an example in the 
 
 ### 📚 API Documentation
 
-* **[Holiday Plans - Docs]**(http://localhost:8001/api/documentation)
+* [Holiday Plans - Docs](http://localhost:8001/api/documentation)
 
 
 ### 📝 Unit Tests
