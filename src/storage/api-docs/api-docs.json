@@ -35,7 +35,7 @@
                                     },
                                     "password": {
                                         "type": "string",
-                                        "example": "142536%"
+                                        "example": "142536"
                                     }
                                 },
                                 "type": "object"
